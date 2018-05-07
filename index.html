@@ -1,0 +1,214 @@
+<!DOCTYPE HTML>
+<!-- Rachel Tamarkin, Eduardo Rouse, Mahin Khan, Siyuan Zou -->
+<html>
+	<head>
+		<title></title>
+		<style>
+		</style>
+		<link rel="stylesheet" type="text/css" href="Airplane.css" />
+		<script src = "Component manager.js"></script>
+		<script src = "utilities.js"></script>
+		
+		
+		<script>
+			function initialize()
+			{
+				currentTim = document.getElementById("curt");
+				
+				maxGate = 10;
+				
+				planeTable = document.getElementById("flightBoard");
+				statusClock = setInterval(advanceTimer,1000);
+				createPlanes();
+				
+				go = true;
+				newplane = false;
+			}
+			function createPlanes()
+			{
+				if (planes.length == 10)
+					return;
+				//Add a new airplane object to the planes array and update the display.		
+				planes.push(new airplaneMaker(8));
+				draw();
+			}
+
+			function advanceTimer()
+			{
+				//var newplane = false;
+				
+				//The airport clock will update every second.
+				currentTim.innerHTML = airportClock.currentTime;
+				
+				//For each plane in the planes array, add one to a plane's timer. A plane's status updates every 8 seconds. timeMod is 0 when a plane's timer is 8. If timeMod is equal to 0, each plane's status is updated, the display is updated, and a plane is added to the array.
+				for(i = 0; i < planes.length; i++)
+				{
+					planes[i].timer++
+					var timeMod = planes[i].timer % planes[i].timerAdv;
+					if(timeMod == 0)
+					{
+						
+						planes[i].statusChanger();
+						draw();
+						if (newplane == false)
+						{
+							newplane = true;
+							createPlanes();
+						}
+					}
+				}
+				if(timeMod == 0)
+					newplane = false;
+			}
+
+			function draw()
+			{
+				//For each plane in the planes array, assign it to its corresponding row and cell. Each plane's destination, departure time and status will be displayed.
+				for(var i = 0; i < planes.length; i++)
+				{
+					planeTable.rows[i+1].cells[1].innerHTML = planes[i].destination;
+					planeTable.rows[i+1].cells[2].innerHTML = planes[i].departureTime;
+					
+					if(planes[i].statusA == 0)
+					{
+						planeTable.rows[i+1].cells[3].innerHTML = "ON TIME";
+					}
+					if(planes[i].statusA == 1)
+					{
+						planeTable.rows[i+1].cells[3].innerHTML = "BOARDING";
+					}
+					if(planes[i].statusA == 2)
+					{
+						planeTable.rows[i+1].cells[3].innerHTML = "TAKEOFF";
+						
+					}
+					if(planes[i].statusA == -1)
+					{
+						planeTable.rows[i+1].cells[3].innerHTML = "DELAYED";	
+					}
+					
+					if (planes[i].statusA > 2)
+					{
+						planes.splice(i, 1);
+						createPlanes();
+						if (go == true)
+						{
+							myMove();	
+						}
+						
+					}
+					if(planes[i].statusA == -1)
+					{
+						planeTable.rows[i+1].cells[3].style.color = "red";
+					}
+					else
+					{
+						planeTable.rows[i+1].cells[3].style.color = "orange";
+					}
+				}
+			}
+						
+			function myMove() 
+			{
+				go = false;
+				var elem = document.getElementById("animate");   
+				var pos = 0;
+				elem.style.display = "inline";
+				var id = setInterval(frame, 23);
+				function frame() 
+				{
+					if (pos == 78) 
+					{
+						clearInterval(id);
+						elem.style.display = "none";
+						go = true;
+					} 			
+					else
+					{
+						pos++; 
+						elem.style.left = pos + '%'; 
+					}
+				}
+			
+			}
+		</script>
+	</head>
+	<body onload = "initialize();">
+		
+		<table id  = "flightBoard">
+			<tr class = "special"">
+				<td>Gate</td> 
+				<td>Destination</td>
+				<td>Departure Time</td>
+				<td>Status</td> 
+			</tr>
+			<tr>
+				<td>1</td> 
+				<td></td>
+				<td></td>
+				<td></td> 
+			</tr>
+			<tr>
+				<td>2</td> 
+				<td></td>
+				<td></td>
+				<td></td> 
+			</tr>
+			<tr>
+				<td>3</td> 
+				<td></td>
+				<td></td>
+				<td></td> 
+			</tr>
+			<tr>
+				<td>4</td> 
+				<td></td>
+				<td></td>
+				<td></td> 
+			</tr>
+			<tr>
+				<td>5</td> 
+				<td></td>
+				<td></td>
+				<td></td> 
+			</tr>
+			<tr>
+				<td>6</td> 
+				<td></td>
+				<td></td>
+				<td></td> 
+			</tr>
+			<tr>
+				<td>7</td> 
+				<td></td>
+				<td></td>
+				<td></td> 
+			</tr>
+			<tr>
+				<td>8</td> 
+				<td></td>
+				<td></td>
+				<td></td> 
+			</tr>
+			<tr>
+				<td>9</td> 
+				<td></td>
+				<td></td>
+				<td></td> 
+			</tr>
+			<tr>
+				<td>10</td> 
+				<td></td>
+				<td></td>
+				<td></td> 
+			</tr>
+		</table>
+		<img id="background" src = "images/back.jpg" />
+			
+			<div id ="container" >THE AIRPORT<img src = "images/plane.png" id ="animate" /></div>
+			<div>
+				<img id="clock" src = "images/clock.png" />
+				<div class = "clock" id = "curt"></div> 
+			</div>
+	</body>
+</html>

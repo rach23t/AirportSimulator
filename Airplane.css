@@ -1,0 +1,87 @@
+table
+{
+	border-style:outset;
+	border-width:thick;
+	border-color:blue;
+	text-align:center;
+	width:50%;
+	color:orange;
+	background-color:black;
+	font-size:16px;
+	font-family: Courier New;
+	position:absolute;
+	bottom:10px;
+	width:800px;
+    height:400px;
+    right:25%;
+    left:50%;
+	margin-left:-400px;
+}
+td	
+{
+	border-style:solid;
+	border-width:thin;
+				
+	padding:5px;
+}
+#background
+{
+	position: fixed; 
+	top: 0; 
+	left: 0; 
+	z-index:-1;
+	/* Preserve aspet ratio */
+	width: 100%;
+	height: 100%;
+}
+#container 
+{
+	width: 100%;
+	height: 200px;
+	position: relative;
+	top:20px;
+	z-index:-1;
+	background-image:url("images/runway.png");
+	background-size:cover;
+	background-repeat: no-repeat;
+	
+	font-size:175px;
+	text-align:center;
+	color:grey;
+}
+#animate 
+{
+	top:20px;
+	left: -350px;
+	width: 300px;
+	height: 150px;
+	position: absolute;
+	z-index:2;
+}
+#clock
+{
+    position: fixed;
+    bottom: 30px;
+    right: 10px;
+}
+#curt
+{
+	
+	position: fixed;
+    bottom: 3%;
+    right: 7%;
+	
+	background-color:white;
+	border: thin solid black;
+	font: normal 14pt Courier New;
+	border-radius: 10px;
+	padding: 5px;
+	padding-left: 10px;
+	padding-right: 10px;
+	
+}
+.special
+{
+	font-weight: bold;
+	font-size:14pt;
+}
